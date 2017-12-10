@@ -1,6 +1,7 @@
 #
 # This example uses Pagerduty's Events API to trigger, acknowledge and resolve
-# an incident.
+# an incident via the integration key from a particular service. Does not
+# use a monitoring tool.
 #
 # CLI usage: python script.py integration_key
 
