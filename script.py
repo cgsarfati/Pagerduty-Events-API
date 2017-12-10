@@ -1,11 +1,7 @@
 #
-#   This example shows how to send a trigger event without a dedup_key.
-#   In this case, PagerDuty will automatically assign a random and unique key
-#   and return it in the response object.
-#   You should store this key in case you want to send an acknowledge or resolve
-#   event to this incident in the future.
+# This example uses Pagerduty's Events API to trigger, acknowledge and resolve
+# an incident.
 #
-
 # CLI usage: python script.py integration_key
 
 import requests
@@ -22,7 +18,7 @@ def trigger_event(headers, integration_key):
     payload = {
         "routing_key": integration_key,
         "event_action": "trigger",
-        "dedup_key": "example_key",
+        "dedup_key": "example_key",  # used to refer to event for future use
         "payload": {
             "summary": "Example alert",
             "source": "Nagios monitoring tool",
@@ -73,7 +69,7 @@ if __name__ == '__main__':
         'Content-type': 'application/json',
         }
 
-    integration_key = sys.argv[1]
+    integration_key = sys.argv[1]  # API integration key in service
 
     t_dedup_key = trigger_event(headers, integration_key)
 
