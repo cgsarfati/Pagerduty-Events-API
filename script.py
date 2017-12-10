@@ -32,7 +32,7 @@ def trigger_event(headers, integration_key):
     r = requests.post(base_url, headers=headers, data=json.dumps(payload))
 
     print 'Triggered event response code: ' + str(r.status_code)
-    return r.json()['dedeup_key']
+    return r.json()['dedup_key']
 
 
 if __name__ == '__main__':
@@ -42,4 +42,5 @@ if __name__ == '__main__':
         'Content-type': 'application/json',
         }
 
-    trigger_event(headers, sys.argv[1])
+    dedup_key = trigger_event(headers, sys.argv[1])
+    print dedup_key
