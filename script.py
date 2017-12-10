@@ -32,7 +32,7 @@ def trigger_event(headers, integration_key):
 
     r = requests.post(base_url, headers=headers, data=json.dumps(payload))
 
-    print 'Triggered event response code: ' + str(r.status_code)
+    print 'Trigger response code: ' + str(r.status_code)
     return r.json()['dedup_key']
 
 
@@ -47,7 +47,22 @@ def acknowledge_event(headers, integration_key, dedup_key):
 
     r = requests.post(base_url, headers=headers, data=json.dumps(payload))
 
-    print 'Acknowledged response code: ' + str(r.status_code)
+    print 'Acknowledge response code: ' + str(r.status_code)
+    return r.json()['dedup_key']
+
+
+def resolve_event(headers, integration_key, dedup_key):
+    """Resolves event on Pagerduty."""
+
+    payload = {
+        "routing_key": integration_key,
+        "dedup_key": dedup_key,
+        "event_action": "resolve"
+        }
+
+    r = requests.post(base_url, headers=headers, data=json.dumps(payload))
+
+    print 'Resolve response code: ' + str(r.status_code)
     return r.json()['dedup_key']
 
 
@@ -68,4 +83,4 @@ if __name__ == '__main__':
 
     time.sleep(2)
 
-    print acknowledge
+    r_dedup_key = resolve_event(headers, integration_key, a_dedup_key)
